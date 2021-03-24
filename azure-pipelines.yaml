@@ -17,3 +17,12 @@ steps:
     inputs:
       terraformVersion: 0.14.7
   # Terraform versions: https://releases.hashicorp.com/terraform/
+  - powershell: |
+     terraform init -backend-config="access_key=$(storage_access_key)" -no-color
+    workingDirectory: $(build.sourcesdirectory)
+    displayName: 'terraform init'
+  
+  - powershell: |
+     terraform validate -json -no-color
+    workingDirectory: $(build.sourcesdirectory)
+    displayName: 'terraform validate'
