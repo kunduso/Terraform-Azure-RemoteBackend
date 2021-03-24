@@ -26,3 +26,7 @@ steps:
      terraform validate -json -no-color
     workingDirectory: $(build.sourcesdirectory)
     displayName: 'terraform validate'
+
+  - powershell: |
+      terraform plan -var client_secret="$(client_secret)" -var client_id="$(client_id)" -var subscription_id="$(subscription_id)" -var tenant_id="$(tenant_id)" -out application.tfplan -no-color
+      condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'))
